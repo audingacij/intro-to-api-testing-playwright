@@ -4,9 +4,7 @@ import { LoanCalcDto } from '../dto/loan-calc-dto'
 
 const url = 'https://backend.tallinn-learning.ee/api/loan-calc/decision'
 
-test('Positive test case: riskDecision is negative for 17 year-old with income: 100', async ({
-  request,
-}) => {
+test('Returns riskDecision: negative for 17 year-old with income: 100', async ({ request }) => {
   const requestBody = LoanCalcDto.Income100Age17()
   const response = await request.post(url, { data: requestBody })
   console.log('response status:', response.status())
@@ -16,9 +14,7 @@ test('Positive test case: riskDecision is negative for 17 year-old with income: 
   expect.soft(responseBody.riskDecision).toBe('negative')
 })
 
-test('Positive test case: risk level is "Very High Risk for 17 year-old with income: 100"', async ({
-  request,
-}) => {
+test('Returns Very High Risk for 17yo with income: 100"', async ({ request }) => {
   const requestBody = LoanCalcDto.Income100Age17()
   const response = await request.post(url, { data: requestBody })
   console.log('response status:', response.status())
@@ -28,7 +24,7 @@ test('Positive test case: risk level is "Very High Risk for 17 year-old with inc
   expect.soft(responseBody.riskLevel).toBe('Very High Risk')
 })
 
-test('Negative test case: income is 0, 400 Bad request', async ({ request }) => {
+test('Returns 400 Bad Request when when income is zero', async ({ request }) => {
   const requestBody = new LoanCalcDto(0, 200, 18, true, 10000, 12)
   const response = await request.post(url, { data: requestBody })
   console.log('response status:', response.status())
@@ -37,7 +33,7 @@ test('Negative test case: income is 0, 400 Bad request', async ({ request }) => 
   expect.soft(response.status()).toBe(StatusCodes.BAD_REQUEST)
 })
 
-test('Negative test case: income is >0, 400 Bad request', async ({ request }) => {
+test('Returns 400 Bad Request when income is >0', async ({ request }) => {
   const requestBody = new LoanCalcDto(-200, 200, 18, true, 10000, 12)
   const response = await request.post(url, { data: requestBody })
   console.log('response status:', response.status())
@@ -46,7 +42,7 @@ test('Negative test case: income is >0, 400 Bad request', async ({ request }) =>
   expect.soft(response.status()).toBe(StatusCodes.BAD_REQUEST)
 })
 
-test('Positive test case: riskPeriods is 6, 9, 12 and riskDecision is positive', async ({
+test('Should return riskPeriods [6, 9, 12] and riskDecision positive for 30yo, income 20000, 6-month loan', async ({
   request,
 }) => {
   const requestBody = LoanCalcDto.Income20000Age30LoanPeriod6()
@@ -69,7 +65,7 @@ test('Positive test case: riskLevel is Medium Risk', async ({ request }) => {
   expect.soft(responseBody.riskLevel).toBe('Medium Risk')
 })
 
-test('Negative test case: debt is negative', async ({ request }) => {
+test('Returns 400 Bad Request when debt is negative', async ({ request }) => {
   const requestBody = new LoanCalcDto(500, -500, 18, true, 10000, 12)
   const response = await request.post(url, { data: requestBody })
   console.log('response status:', response.status())
@@ -78,7 +74,7 @@ test('Negative test case: debt is negative', async ({ request }) => {
   expect.soft(response.status()).toBe(StatusCodes.BAD_REQUEST)
 })
 
-test('Loan amount is 0', async ({ request }) => {
+test('Returns 400 Bad Request when loan amount is 0', async ({ request }) => {
   const requestBody = new LoanCalcDto(5000, 100, 26, true, 0, 15)
   const response = await request.post(url, { data: requestBody })
   console.log('response status:', response.status())
@@ -97,7 +93,7 @@ test('Positive test case: riskScore is 2.0375', async ({ request }) => {
   expect.soft(responseBody.riskScore).toBe(2.0375)
 })
 
-test('Positive test case: riskLevel is Low Risk', async ({ request }) => {
+test('Should return riskLevel: Low Risk for income 20000, 30yo ', async ({ request }) => {
   const requestBody = LoanCalcDto.Income20000Age30LoanPeriod12()
   const response = await request.post(url, { data: requestBody })
   console.log('response status:', response.status())
@@ -107,7 +103,7 @@ test('Positive test case: riskLevel is Low Risk', async ({ request }) => {
   expect.soft(responseBody.riskLevel).toBe('Low Risk')
 })
 
-test('Negative test case: loan amount is negative', async ({ request }) => {
+test('Returns 400 Bad Request when loan amount is negative', async ({ request }) => {
   const requestBody = new LoanCalcDto(20000, 100, 29, false, -150, 5)
   const response = await request.post(url, { data: requestBody })
   console.log('response status:', response.status())
@@ -116,7 +112,7 @@ test('Negative test case: loan amount is negative', async ({ request }) => {
   expect.soft(response.status()).toBe(StatusCodes.BAD_REQUEST)
 })
 
-test('E3: Negative test case: age is string', async ({ request }) => {
+test('Returns 400 Bad Request when loan period is negative', async ({ request }) => {
   const requestBody = new LoanCalcDto(20000, 100, 20, true, 500, -1)
   const response = await request.post(url, { data: requestBody })
   console.log('response status:', response.status())
