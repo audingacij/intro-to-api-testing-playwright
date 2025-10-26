@@ -19,17 +19,17 @@
 | Negative: Get order with empty username and password                      | GET    | 500 Undocumented |
 | Negative: Get order with empty username, valid password: Valid123         | GET    | 500 Undocumented |
 
-| Scenario Name                                                                        | Method | Expected Status |
-| ------------------------------------------------------------------------------------ | ------ | --------------- |
-| Based on example 1: Positive: riskDecision is negative                               | POST   | 200 OK          |
-| Based on example 1: Positive: risk level is "Very High Risk"                         | POST   | 200 OK          |
-| Based on example 1: Negative: age is undefined                                       | POST   | 400 Bad Request |
-| Based on example 1: Negative: income is provided as String                           | POST   | 400 Bad Request |
-| Based on example 2: Positive: riskPeriods is [6, 9, 12] and riskDecision is positive | POST   | 200 OK          |
-| Based on example 2: Positive: riskLevel is Medium Risk                               | POST   | 200 OK          |
-| Based on example 2: Negative: loan period is not provided                            | POST   | 400 Bad Request |
-| Based on example 2: Negative: employed is provided as String                         | POST   | 400 Bad Request |
-| Based on example 3: Positive: riskScore is 2.0375                                    | POST   | 200 OK          |
-| Based on example 3: Positive: riskLevel is Low Risk                                  | POST   | 200 OK          |
-| Based on example 3: Negative: debt is provided as Boolean                            | POST   | 400 Bad Request |
-| Based on example 3: Negative: age is provided as String                              | POST   | 400 Bad Request |
+| Scenario Name                                                                   | Method | Expected Status |
+| ------------------------------------------------------------------------------- | ------ | --------------- |
+| Positive: riskDecision is negative for 17 year-old with income: 100             | POST   | 200 OK          |
+| Positive: risk level is "Very High Risk" for 17 year-old with income: 100       | POST   | 200 OK          |
+| Negative: income is 0                                                           | POST   | 400 Bad Request |
+| Negative: income is negative (-200)                                             | POST   | 400 Bad Request |
+| Positive: riskPeriods is [6, 9, 12] and riskDecision is positive                | POST   | 200 OK          |
+| Positive: riskLevel is Medium Risk for Income: 20000, Age: 30 and LoanPeriod: 6 | POST   | 200 OK          |
+| Negative: Debt is negative (-500)                                               | POST   | 400 Bad Request |
+| Negative: loan amount is 0                                                      | POST   | 400 Bad Request |
+| Positive: riskScore is 2.0375 for Income:20000, Age:30, LoanPeriod: 12          | POST   | 200 OK          |
+| Positive: riskLevel is Low Risk for Income:20000, Age:30, LoanPeriod: 12        | POST   | 200 OK          |
+| Negative: loan amount is negative (-150)                                        | POST   | 400 Bad Request |
+| Negative: loan period is negative (-1)                                          | POST   | 400 Bad Request |

@@ -22,32 +22,15 @@ export class LoanCalcDto {
     this.loanPeriod = loanPeriod
   }
 
-  static requestBodyFromExample1(): LoanCalcDto {
+  static Income100Age17(): LoanCalcDto {
     return new LoanCalcDto(100, 0, 17, true, 1000, 12)
   }
 
-  static requestBodyFromExample1withoutAge(): LoanCalcDto {
-    return new LoanCalcDto(100, 0, undefined, true, 1000, 12)
-  }
-  static requestBodyFromExample1withIncomeAsString(): LoanCalcDto {
-    return new LoanCalcDto('100', 0, undefined, true, 1000, 12)
-  }
-  static requestBodyFromExample2(): LoanCalcDto {
+  static Income20000Age30LoanPeriod6(): LoanCalcDto {
     return new LoanCalcDto(20000, 0, 30, true, 500, 6)
   }
-  static requestBodyFromExample2withLoanPeriodEmpty(): LoanCalcDto {
-    return new LoanCalcDto(20000, 0, 30, true, 500)
-  }
-  static requestBodyFromExample2withEmployedAsString(): LoanCalcDto {
-    return new LoanCalcDto(20000, 0, 30, 'no', 500, 6)
-  }
-  static requestBodyFromExample3(): LoanCalcDto {
+
+  static Income20000Age30LoanPeriod12(): LoanCalcDto {
     return new LoanCalcDto(20000, 0, 30, true, 500, 12)
-  }
-  static requestBodyFromExample3withDebtBoolean(): LoanCalcDto {
-    return new LoanCalcDto(20000, false, 30, true, 500, 12)
-  }
-  static requestBodyFromExample3withAgeString(): LoanCalcDto {
-    return new LoanCalcDto(20000, 0, 'thirty', true, 500, 12)
   }
 }
