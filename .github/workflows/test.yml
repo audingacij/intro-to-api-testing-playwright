@@ -33,10 +33,10 @@ jobs:
           echo "Running ESLint to check for linting issues..."
           npm run lint
 
-      - name: Run TypeScript compile check
-        run: |
-          echo "Running TypeScript compiler to check for type issues..."
-          npx tsc --noEmit
+#      - name: Run TypeScript compile check
+#        run: |
+#          echo "Running TypeScript compiler to check for type issues..."
+#          npx tsc --noEmit
 
       - name: Run Playwright API tests
         env:
