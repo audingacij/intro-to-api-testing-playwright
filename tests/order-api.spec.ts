@@ -11,7 +11,7 @@ const url = 'https://backend.tallinn-learning.ee/test-orders/'
 const validApiKey = '1234567891234567'
 
 test('Positive: Update order with valid id = 1 + valid api_key | 200 OK', async ({ request }) => {
-  const requestBody = new OrderDto('OPEN', 0, 'John', '999889999', 'comment', 7)
+  const requestBody = new OrderDto('John', '999889999', 'comment', 7)
   const headers = { api_key: validApiKey }
   const response = await request.put(url + '1', { data: requestBody, headers })
   console.log('response status:', response.status())
@@ -20,7 +20,7 @@ test('Positive: Update order with valid id = 1 + valid api_key | 200 OK', async 
 })
 
 test('Positive: Update order with valid id = 2 + valid api_key | 200 OK', async ({ request }) => {
-  const requestBody = new OrderDto('OPEN', 0, 'John', '999889999', 'comment', 2)
+  const requestBody = new OrderDto('John', '999889999', 'comment', 2)
   const headers = { api_key: validApiKey }
   const response = await request.put(url + '2', { data: requestBody, headers })
   console.log('response status:', response.status())
@@ -30,7 +30,7 @@ test('Positive: Update order with valid id = 2 + valid api_key | 200 OK', async 
 })
 
 test('Positive: Update order with valid id = 3 + valid api_key | 200 OK', async ({ request }) => {
-  const requestBody = new OrderDto('OPEN', 0, 'John', '999889999', 'comment', 3)
+  const requestBody = new OrderDto('John', '999889999', 'comment', 3)
   const headers = { api_key: validApiKey }
   const response = await request.put(url + '3', { data: requestBody, headers })
   console.log('response status:', response.status())
@@ -42,17 +42,10 @@ test('Positive: Update order with valid id = 3 + valid api_key | 200 OK', async 
 test('Negative: Update order with invalid api_key = 123 | 401 Unauthorized', async ({
   request,
 }) => {
-  const body = {
-    status: 'OPEN',
-    courierId: 0,
-    customerName: 'string',
-    customerPhone: 'string',
-    comment: 'string',
-    id: 1,
-  }
+  const requestBody = OrderDto.createOpenOrderWithLowPriority()
   const headers = { api_key: '123' }
 
-  const response = await request.put(url + '1', { data: body, headers })
+  const response = await request.put(url + '1', { data: requestBody, headers })
   console.log('response status:', response.status())
   console.log('response body:', await response.text())
 
