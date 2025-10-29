@@ -6,12 +6,20 @@ export class OrderDto {
   comment: string
   id: number
 
-  constructor(status: string, courierId: number, customerName: string, customerPhone: string, comment: string, id: number) {
-    this.status = status
-    this.courierId = courierId
+  constructor(customerName: string, customerPhone: string, comment: string, id: number) {
+    this.status = 'OPEN'
+    this.courierId = 0
     this.customerName = customerName
     this.customerPhone = customerPhone
     this.comment = comment
     this.id = id
+  }
+
+  static createOpenOrderWithRandomData(): OrderDto {
+    return new OrderDto('John Doe', '+123456789', 'Urgent order', Math.floor(Math.random() * 100))
+  }
+
+  static createOpenOrderWithLowPriority(): OrderDto {
+    return new OrderDto('John Doe', '+123456789', 'Low Priority', Math.floor(Math.random() * 100))
   }
 }
