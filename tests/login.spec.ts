@@ -29,7 +29,6 @@ test.describe('Negative tests', () => {
   test('should not return token when sending a request with an incorrect HTTP method', async ({
     request,
   }) => {
-    const requestBody = LoginDto.createLoginDto()
     const response = await request.get('https://backend.tallinn-learning.ee/login/student')
     console.log('response status:', response.status())
     console.log('response body:', await response.text())
