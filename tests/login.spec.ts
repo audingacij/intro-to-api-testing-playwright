@@ -41,8 +41,11 @@ test.describe('Negative tests', () => {
     const response = await request.post('https://backend.tallinn-learning.ee/login/student', {
       data: incorrectRequestBody,
     })
-    console.log('response body:', await response.text())
+    const responseBody = await response.text()
+    console.log('response body:', responseBody)
     expect.soft(response.status()).toBe(StatusCodes.UNAUTHORIZED)
+    const jwtRegex = /eyJhb[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+/
+    expect.soft(responseBody).not.toMatch(jwtRegex)
   })
 
   test('should not return token when sending a request with only password', async ({ request }) => {
